@@ -1,21 +1,22 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NavComponent } from './nav/nav.component';
-import { AccountService } from './_services/account.service';
-import { User } from './_model/user';
+import { HttpClient } from "@angular/common/http";
+import { Component, inject, OnInit } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import { NavComponent } from "./nav/nav.component";
+import { AccountService } from "./_services/account.service";
+import { User } from "./_model/user";
+import { HomeComponent } from "./home/home.component";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   standalone: true,
-  imports: [RouterOutlet, NavComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  imports: [RouterOutlet, NavComponent, HomeComponent],
+  templateUrl: "./app.component.html",
+  styleUrl: "./app.component.css",
 })
 export class AppComponent implements OnInit {
   http = inject(HttpClient);
   accountService = inject(AccountService);
-  title = 'DatingApp';
+  title = "DatingApp";
   users: any;
 
   ngOnInit(): void {
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
   }
 
   setCurrentUser() {
-    const currentUserString = localStorage.getItem('user');
+    const currentUserString = localStorage.getItem("user");
     if (!currentUserString) {
       return;
     }
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
   }
 
   getUsers() {
-    this.http.get('https://localhost:5001/api/users').subscribe({
+    this.http.get("https://localhost:5001/api/users").subscribe({
       next: (response) => {
         this.users = response;
       },
@@ -42,7 +43,7 @@ export class AppComponent implements OnInit {
         console.log(error);
       },
       complete: () => {
-        console.log('Request has completed');
+        console.log("Request has completed");
       },
     });
   }
